@@ -17,18 +17,25 @@ BITC		=	ft_cd.c ft_echo.c ft_env.c ft_exit.c \
 UTID		=	utils/
 UTIS		=	error.c find_en.c
 
+PTID		=	parse/
+PTIS		=	parse.c
+
 BITDIR	= $(addprefix $(SRCDIR), $(BITD))
 UTIDIR	= $(addprefix $(SRCDIR), $(UTID))
+PTIDIR	= $(addprefix $(SRCDIR), $(PTID))
+
 
 SRCS	= $(addprefix $(SRCDIR), $(SRC))
 BITCS	= $(addprefix $(BITDIR), $(BITC))
 UTICS	= $(addprefix $(UTIDIR), $(UTIS))
+PTICS	= $(addprefix $(PTIDIR), $(PTIS))
 
 OBJS			= $(SRCS:.c=.o)
 BITJS			= $(BITCS:.c=.o)
 UTIJS			= $(UTICS:.c=.o)
+PTIJS			= $(PTICS:.c=.o)
 
-ALL_OBJS		=	$(OBJS) $(BITJS) $(UTIJS)
+ALL_OBJS		=	$(OBJS) $(BITJS) $(UTIJS) $(PTIJS)
 
 %.o:		%.c
 			$(CC) $(CFLAGS) -g -I$(INCLUDE) -c $< -o $@

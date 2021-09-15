@@ -6,7 +6,7 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 13:26:18 by kwonhyukbae       #+#    #+#             */
-/*   Updated: 2021/09/08 09:21:12 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/13 06:54:35 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ char	*blt_str(int i)
 // echo env unset export
 // 이차원배열을 만들어서 char *line -> char **cmd로 내장함수를 저장할 수 있게 만들자.
 // 함수포인터를 사용했을 때 인자값이 고정이 되어버린다.
-int	(*blt_func(int i))(char *line, char **en)
+int	(*blt_func(int i))(t_minishell *shell)
 {
-	int	(*blt_func[BLTIN_NUM])(char *line, char **en);
+	int	(*blt_func[BLTIN_NUM])(t_minishell *shell);
 
 	blt_func[0] = &ft_echo;
 	blt_func[1] = &ft_cd;

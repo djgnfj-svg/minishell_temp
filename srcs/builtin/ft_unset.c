@@ -6,13 +6,13 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 14:12:52 by kwonhyukbae       #+#    #+#             */
-/*   Updated: 2021/09/08 14:37:56 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/13 06:33:04 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int check_env(char *en_name)
+static int check_env(char *en_name)
 {
 	int i;
 
@@ -27,7 +27,7 @@ int check_env(char *en_name)
 	return (1);
 }
 
-int		check_key_value(char *str, char *envs)
+static int		check_key_value(char *str, char *envs)
 {
 	int	i;
 
@@ -39,7 +39,7 @@ int		check_key_value(char *str, char *envs)
 	return (0);
 }
 
-int unset_en(char *str, char ***en)
+static int unset_en(char *str, char ***en)
 {
 	int i;
 	int last;
@@ -64,7 +64,7 @@ int unset_en(char *str, char ***en)
 }
 
 // 이것또한 파이프라인 뒤쪽에 있다면 실행되지 않는다.
-int	ft_unset(char *line, char **en)
+int		ft_unset(t_minishell *shell)
 {
 	int i;
 	int status;
@@ -72,11 +72,8 @@ int	ft_unset(char *line, char **en)
 
 	i = 0;
 	status = 0;
-	buff = ft_split(line, ' ');
+	buff = ft_split(shell->cmd->buff, ' ');
 	while (buff[++i])
-	{
 		status = check_env(buff[i]) && unset_en(buff[i], &g_envp);
-	}
-	(void)en;
 	return (status);
 }

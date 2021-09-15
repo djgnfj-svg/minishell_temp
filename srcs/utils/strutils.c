@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   strutils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/04 14:12:30 by kwonhyukbae       #+#    #+#             */
-/*   Updated: 2021/09/13 06:40:04 by ysong            ###   ########.fr       */
+/*   Created: 2021/09/13 14:53:03 by ysong             #+#    #+#             */
+/*   Updated: 2021/09/13 15:07:31 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+// #include "minishell.h"
 
-int		ft_env(t_minishell *shell)
-{
-	int i;
+// char *remove_str(char *line, char *remove_str)
+// {
+// 	int remove_len = ft_strlen(remove_str);
+// 	int line_len = ft_strlen(line);
+// 	int i;
+// 	int j;
+// 	char *temp;
+// 	i = -1;
+// 	j = 0;
+// 	while(line[++i])
+// 	{
+// 		if(remove_str[j] == line[i] && remove_str[j] && remove_str[j+1])
+// 		{
+// 			if (remove_str[j+1] == line_len[i])
+// 			{
 
-	i = 0;
-	while(g_envp[i])
-	{
-		write(1, g_envp[i], ft_strlen(g_envp[i]));
-		write(1,"\n",1);
-		i++;
-	}
-	(void)shell;
-	return (0);
-}
+// 			}
+// 		}
+// 	}
+
+// }

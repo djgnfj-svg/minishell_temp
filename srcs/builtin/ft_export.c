@@ -6,7 +6,7 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 14:12:47 by kwonhyukbae       #+#    #+#             */
-/*   Updated: 2021/09/08 12:54:49 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/13 06:34:29 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int check_export(char *str, char ***en)
 }
 
 // 만약 글로벌 변수를 사용하고 싶지 않다면 삼중포인터로 가져와야 할거같다.
-int	ft_export(char *line, char **en)
+int		ft_export(t_minishell *shell)
+
 {
 	int i;
 	int status;
@@ -63,7 +64,7 @@ int	ft_export(char *line, char **en)
 	// char *value;
 
 	status = 0;
-	buff = ft_split(line, ' ');
+	buff = ft_split(shell->cmd->buff, ' ');
 	i = 0;
 
 	if(!buff[1])
@@ -83,10 +84,7 @@ int	ft_export(char *line, char **en)
 			status = check_export(buff[i],&g_envp);
 		else
 			while(buff[++i])
-			{
 				status = check_export(buff[i],&g_envp);
-			}
 	}
-	(void)en;
 	return (status);
 }

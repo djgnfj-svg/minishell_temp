@@ -6,19 +6,20 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 14:11:43 by kwonhyukbae       #+#    #+#             */
-/*   Updated: 2021/09/08 04:36:13 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/13 09:04:17 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_echo(char *line, char **en)
+int		ft_echo(t_minishell *shell)
 {
 	int i;
 	char **temp;
 	char **buff;
+	pid_t pid;
 	
-	buff = ft_split(line, ' ');
+	buff = ft_split(shell->cmd->buff, ' ');
 	i = 0;
 	while(buff[i])
 		i++;
@@ -27,7 +28,10 @@ int	ft_echo(char *line, char **en)
 	while(buff[++i])
 		temp[i] = buff[i];
 	temp[i] = NULL;
-	if(execve("/bin/echo", temp ,en) == -1)
-		fprintf(stderr, "에러 %s\n", strerror(errno));
+	pid = fork();
+	if (pid == 0)
+		if(execve("/bin/echo", temp ,g_envp) == -1)
+			fprintf(stderr, "에러 %s\n", strerror(errno));
+	waitpid(pid, &shell->exit_status, 0);
 	return (0);
 }
