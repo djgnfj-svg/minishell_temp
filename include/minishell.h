@@ -12,11 +12,10 @@
 # include <errno.h>
 # include "../libft/includes/libft.h"
 
-// # include <signal.h>
-// # include <sys/types.h>
-// # include <sys/stat.h>
+# define STDIN 			0
+# define STDOUT 		1
+# define STDERR 		2
 
-// # define PATH_MAX 1024
 # define BLTIN_NUM 7
 extern char		**g_envp;
 
@@ -57,12 +56,18 @@ int		ft_exit(t_minishell *shell);
 parse.c
 */
 t_minishell *parse_data(char *line);
-
+int list_rewind(t_minishell **shell);
 /*
 utils.c
 */
 int print_error1(char *msg, char *err_num);
 int print_error2(char *msg1, char* msg2, char *err_num);
+void child_process(t_minishell *shell);
+
+/*
+freeshell.c
+*/
+void freeshell(t_minishell **shell);
 
 char			*find_en(char *key, char **en);
 #endif

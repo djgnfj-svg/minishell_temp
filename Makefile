@@ -15,7 +15,7 @@ BITC		=	ft_cd.c ft_echo.c ft_env.c ft_exit.c \
 				ft_export.c ft_pwd.c ft_unset.c
 
 UTID		=	utils/
-UTIS		=	error.c find_en.c
+UTIS		=	error.c find_en.c freeshell.c child_proecss.c
 
 PTID		=	parse/
 PTIS		=	parse.c

@@ -6,7 +6,7 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 22:48:52 by ysong             #+#    #+#             */
-/*   Updated: 2021/09/18 01:14:16 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/18 14:26:18 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ int exit_fatal(void)
 
 static int	run_shell(t_minishell *shell)
 {
-	int	i;
 	int ret;
 	int pipe_open;
 	int status;
+	int i;
 	pid_t pid;
 
-	pipe_open = 0;
 	i = -1;
+	pipe_open = 0;
 	ret = 1;
 	if(shell->cmd->cmd == NULL)
 		shell->cmd->cmd = " ";
@@ -53,32 +53,42 @@ static int	run_shell(t_minishell *shell)
 		if (pipe(shell->fds))
 			return (exit_fatal());
 	}
-	//명령어 실행부분
-	pid = fork();
-	if (pid < 0)
-		return (exit_fatal());
-	else if (pid == 0)
+	if (shell->pipe_flag == 0)
 	{
-		if (shell->pipe_flag == 1 && dup2(shell->fds[1], 1) < 0)
-			return (exit_fatal());
-		if (shell->prev && shell->prev->pipe_flag == 1 && dup2(shell->prev->fds[0], 0) < 0)
-			return (exit_fatal());
 		while (++i < BLTIN_NUM)
+		{
 			if (!ft_strcmp(shell->cmd->cmd, blt_str(i)))
+			{
 				ret = (*blt_func(i))(shell);
+				break;
+			}
+			else if(i == 6)
+				write(1, "commend not found\n", ft_strlen("commend not found\n"));
+		}
 	}
 	else
 	{
-		waitpid(pid, &status, 0);
-		if (pipe_open)
+		//명령어 실행부분
+		pid = fork();
+		if (pid < 0)
+			return (exit_fatal());
+		else if (pid == 0)
 		{
-			close(shell->fds[1]);
-			if (!shell->next)
-				close(shell->fds[0]);
+			child_process(shell);
 		}
-		if (shell->prev && shell->prev->pipe_flag == 1)
-			close(shell->prev->fds[0]);
-
+		else
+		{
+			waitpid(pid, &status, 0);
+			if (pipe_open)
+			{
+				close(shell->fds[1]);
+				if (!shell->next)
+					close(shell->fds[0]);
+			}
+			if (shell->prev && shell->prev->pipe_flag == 1)
+				close(shell->prev->fds[0]);
+			freeshell(&shell);
+		}
 	}
 	return ret;
 }
@@ -112,8 +122,7 @@ void	minishell(char **en)
 			// 		break;
 			// }
 			status = run_shell(shell);
-			// free(line);
-			//freeshell(shell)
+			free(line);
 		}
 	}
 	free(line);
