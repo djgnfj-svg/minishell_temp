@@ -6,7 +6,7 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 22:48:52 by ysong             #+#    #+#             */
-/*   Updated: 2021/09/20 02:10:56 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/21 21:54:54 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,17 @@ static int	run_shell(t_minishell *shell)
 
 	i = -1;
 	// 이부분을 t_LIST형태로 반복해야됨
-	if (shell->cmd->cmd == NULL)
-		shell->cmd->cmd = " ";
-	if (shell->pipe_flag == 0)
-		while (++i < BLTIN_NUM)
-			run_blt(shell, i);
-	else
-		pipe_process(shell);
-
+	while (shell)
+	{
+		if (shell->cmd->cmd == NULL)
+			shell->cmd->cmd = " ";
+		if (shell->pipe_flag == 0)
+			while (++i < BLTIN_NUM)
+				run_blt(shell, i);
+		else
+			pipe_process(shell);
+		shell = shell->next;
+	}
 	return 1;
 }
 
