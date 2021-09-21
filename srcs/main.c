@@ -6,7 +6,7 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 10:59:00 by kwonhyukbae       #+#    #+#             */
-/*   Updated: 2021/09/08 15:41:43 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/18 15:19:03 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 //임시로 만듬 만약에 3중포인터로 움직일수 있다면 그방향으로 가도 좋을듯
 char	**g_envp = NULL;
 
-char			**copy_envp(char **envs)
+static char			**copy_envp(char **envs)
 {
 	char	**new;
 	int		i;

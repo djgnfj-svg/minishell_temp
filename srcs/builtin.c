@@ -6,11 +6,18 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 13:26:18 by kwonhyukbae       #+#    #+#             */
-/*   Updated: 2021/09/18 13:04:56 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/18 17:00:32 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void print_error_blt(char *str)
+{
+	write(1, str, strlen(str));
+	write(1, " ", 1);
+	ft_putstr("commend not found\n");
+}
 
 char	*blt_str(int i)
 {
@@ -27,12 +34,6 @@ char	*blt_str(int i)
 	return (blt_str[i]);
 }
 
-// 함수포인터를 이용하여 내장 기능을 수행한다.
-// 함수포인터를 사용하는 이유는 ?
-// exit pwd cd
-// echo env unset export
-// 이차원배열을 만들어서 char *line -> char **cmd로 내장함수를 저장할 수 있게 만들자.
-// 함수포인터를 사용했을 때 인자값이 고정이 되어버린다.
 int	(*blt_func(int i))(t_minishell *shell)
 {
 	int	(*blt_func[BLTIN_NUM])(t_minishell *shell);
@@ -47,22 +48,26 @@ int	(*blt_func(int i))(t_minishell *shell)
 	return (blt_func[i]);
 }
 
-// void	run_commend(t_data *data, char **env)
-// {
-// 	if(!ft_strcmp(data->cmd->commend, "echo"))
-// 		run_echo(data, env);
-// 	// else if(ft_strcmp(data->cmd->commend, "cd "))
-// 	// 	run_cd();
-// 	else if(!ft_strcmp(data->cmd->commend, "pwd"))
-// 		run_pwd();
-// 	// else if(ft_strcmp(data->cmd->commend, "export"))
-// 	// 	run_export();
-// 	// else if(ft_strcmp(data->cmd->commend, "unset"))
-// 	// 	run_unset();
-// 	else if(!ft_strcmp(data->cmd->commend, "env"))
-// 		run_env(env);
-// 	// else if(ft_strcmp(data->cmd->commend, "exit"))
-// 	// 	run_exit();
-// 	// else
-// 	// 	print_error();
-// }
+int check_cmd(char *cmd)
+{
+	char	*builtin;
+
+	builtin = cmd;
+	if (!ft_strcmp(builtin, "cd") || !ft_strcmp(builtin, "echo")
+	|| !ft_strcmp(builtin, "pwd") || !ft_strcmp(builtin, "env")
+	|| !ft_strcmp(builtin, "export") || !ft_strcmp(builtin, "export")
+	|| !ft_strcmp(builtin, "unset") || !ft_strcmp(builtin, "exit"))
+		return (1);
+	return (0);
+}
+int run_blt(t_minishell *shell, int i)
+{
+	char *cmd;
+	
+	cmd = shell->cmd->cmd;
+	if(!ft_strcmp(cmd, blt_str(i)))
+		(*blt_func(i))(shell);
+	else if(i == 6 && !check_cmd(cmd))
+		print_error_blt(cmd);
+	return 0;
+}

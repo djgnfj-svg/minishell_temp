@@ -6,7 +6,7 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 14:11:37 by kwonhyukbae       #+#    #+#             */
-/*   Updated: 2021/09/13 09:05:03 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/20 01:17:37 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		ft_cd(t_minishell *shell)
 	{
 		path = buff[1];
 		if(chdir(path) == -1)
-			print_error2("cd", path, strerror(errno));
+			shell->exit_status = print_error2("cd", path, strerror(errno));
 	}
 	else if (buff[1] == NULL || buff[1][0] == '~')
 		cd_home(path, buff);

@@ -6,7 +6,7 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 14:12:52 by kwonhyukbae       #+#    #+#             */
-/*   Updated: 2021/09/13 06:33:04 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/18 16:47:45 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int		ft_unset(t_minishell *shell)
 	int status;
 	char **buff;
 
+	if (shell->pre_flag)
+		return 0;
 	i = 0;
 	status = 0;
 	buff = ft_split(shell->cmd->buff, ' ');

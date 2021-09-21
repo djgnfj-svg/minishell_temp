@@ -19,10 +19,26 @@
 # define BLTIN_NUM 7
 extern char		**g_envp;
 
+
+
+/*
+
+
+*/
+
+/*
+next,
+prev,
+pipe_flag,
+pre_flag,
+cmd, type, arg <- option, text,
+*/
+
 typedef struct s_cmd
 {
 	char *cmd;
 	char *buff;
+	//t_minishell next_perv
 }				t_cmd;
 
 typedef struct s_minishell
@@ -33,6 +49,7 @@ typedef struct s_minishell
 	t_cmd	*cmd;
 	int		exit_status;
 	int		pipe_flag;
+	int		pre_flag;
 	int		fds[2];
 }	t_minishell;
 
@@ -44,6 +61,8 @@ builtin commands
 */
 char	*blt_str(int i);
 int		(*blt_func(int i))(t_minishell *shell);
+int		run_blt(t_minishell *shell, int i);
+
 int		ft_echo(t_minishell *shell);
 int		ft_cd(t_minishell *shell);
 int		ft_pwd(t_minishell *shell);
@@ -63,6 +82,7 @@ utils.c
 int print_error1(char *msg, char *err_num);
 int print_error2(char *msg1, char* msg2, char *err_num);
 void child_process(t_minishell *shell);
+int pipe_process(t_minishell *shell);
 
 /*
 freeshell.c

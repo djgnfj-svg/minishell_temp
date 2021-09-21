@@ -6,7 +6,7 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:38:03 by ysong             #+#    #+#             */
-/*   Updated: 2021/09/18 01:36:35 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/20 02:09:19 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static t_minishell *init_shell(char *line, t_minishell *shell, int pipe)
 		shell->pipe_flag = 1;
 	else
 		shell->pipe_flag = 0;
+	shell->pre_flag = 0;
 	shell->next = NULL;
 	shell->prev = NULL;
 	return shell;
@@ -62,13 +63,16 @@ t_minishell *parse_data(char *line)
 		i++;
 	
 	shell = init_shell(line, shell, i);
-	// echo 시 '\|' '\\|' 예외는 나중``
-	i = 0;
-	while (commnd_list[++i])
+	if (i > 0)
 	{
-		temp = init_shell(commnd_list[i],temp, i+1);
-		connect_list(&temp, &shell);
+		// echo 시 '\|' '\\|' 예외는 나중``
+		i = 0;
+		while (commnd_list[++i])
+		{
+			temp = init_shell(commnd_list[i],temp, i);
+			connect_list(&temp, &shell);
+		}
+		list_rewind(&shell);
 	}
-	list_rewind(&shell);
 	return shell;
 }
