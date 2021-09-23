@@ -6,7 +6,7 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/04 14:11:43 by kwonhyukbae       #+#    #+#             */
-/*   Updated: 2021/09/18 15:56:48 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/23 01:26:16 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int		ft_echo(t_minishell *shell)
 	char **temp;
 	char **buff;
 	pid_t pid;
-	
 	buff = ft_split(shell->cmd->buff, ' ');
 	i = 0;
 	while(buff[i])
@@ -26,7 +25,10 @@ int		ft_echo(t_minishell *shell)
 	temp = (char **)malloc(sizeof(char *) * i);
 	i = -1;
 	while(buff[++i])
+	{
 		temp[i] = buff[i];
+		printf("temp[%d] = %s\n",i,temp[i]);
+	}
 	temp[i] = NULL;
 	pid = fork();
 	if (pid == 0)
