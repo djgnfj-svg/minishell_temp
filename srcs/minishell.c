@@ -6,7 +6,7 @@
 /*   By: ysong <ysong@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/16 22:48:52 by ysong             #+#    #+#             */
-/*   Updated: 2021/09/21 21:54:54 by ysong            ###   ########.fr       */
+/*   Updated: 2021/09/25 08:34:18 by ysong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static int	run_shell(t_minishell *shell)
 		if (shell->pipe_flag == 0)
 			while (++i < BLTIN_NUM)
 				run_blt(shell, i);
+		else if (shell->re_flag == 1)
+			re_process(shell);
 		else
 			pipe_process(shell);
 		shell = shell->next;

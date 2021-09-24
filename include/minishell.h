@@ -50,6 +50,7 @@ typedef struct s_minishell
 	int		exit_status;
 	int		pipe_flag;
 	int		pre_flag;
+	int		re_flag;
 	int		fds[2];
 }	t_minishell;
 
